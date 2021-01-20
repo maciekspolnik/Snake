@@ -19,8 +19,13 @@ class SnakeTest(unittest.TestCase):
         self.snake.x, self.snake.y = 100, 100
         self.assertTrue(self.snake.collision_check())
 
+    def test_reset(self):
+        self.snake.x, self.snake.y = 50, 500
+        self.snake.reset(0)
+        self.assertListEqual([self.snake.x, self.snake.y], [SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2])
 
-class FoodTest(unittest.TestCase):
+
+class MiscTest(unittest.TestCase):
     def setUp(self):
         self.coordinates = [100, 97]
 

@@ -134,34 +134,35 @@ class Screen:
         pygame.display.set_caption('SNAKE GAME')
         self.font_normal = pygame.font.SysFont("segoeui", FONT_SIZE)
         self.font_big = pygame.font.SysFont("segoeui", FONT_SIZE_LARGE)
-        self.mouse_coords = STARTER_MOUSE_COORDS
+        self.mouse_coordinates = STARTER_MOUSE
 
-    def draw_framed_rect(self, coords, color):
+    def draw_framed_rect(self, coordinates, color):
         """
         Method that prints a rectangle with a gray frame around it.
-        :param coords: coordinates of the rectangle [x,y,width,height]
+        :param coordinates: coordinates of the rectangle [x,y,width,height]
         :param color: RGB tuple representing color
         """
-        pygame.draw.rect(self.screen, GRAY, coords)
-        pygame.draw.rect(self.screen, color, [coords[0] + 1, coords[1] + 1, coords[2] - 2, coords[3] - 2])
+        pygame.draw.rect(self.screen, GRAY, coordinates)
+        pygame.draw.rect(self.screen, color,
+                         [coordinates[0] + 1, coordinates[1] + 1, coordinates[2] - 2, coordinates[3] - 2])
 
-    def render_text(self, text, coords, font, color=GRAY):
+    def render_text(self, text, coordinates, font, color=GRAY):
         """
         Method rendering and printing given text on the screen.
         :param text: String to be printed
-        :param coords: coordinates of the text [x,y,width,height]
+        :param coordinates: coordinates of the text [x,y,width,height]
         :param font: pygame.font object
         :param color: RGB tuple representing color
         """
-        self.screen.blit(font.render(text, True, color), coords)
+        self.screen.blit(font.render(text, True, color), coordinates)
 
-    def render_image(self, image, coords):
+    def render_image(self, image, coordinates):
         """
         Method rendering image on the screen
         :param image: image path (string)
-        :param coords: coordinates of the image [x,y]
+        :param coordinates: coordinates of the image [x,y]
         """
-        self.screen.blit(pygame.image.load(image), coords)
+        self.screen.blit(pygame.image.load(image), coordinates)
 
     def render_score(self, score):
         """
@@ -236,15 +237,15 @@ def screen_update():
     pygame.display.update()
 
 
-def button(coords, button_coords):
+def button(coordinates, button_coordinates):
     """
     A function checking if a certain button was clicked.
-    :param coords: mouse click coords
-    :param button_coords: button coords tuple
+    :param coordinates: mouse click coordinates
+    :param button_coordinates: button coordinates tuple
     :return: bool value
     """
-    if (button_coords[0] <= coords[0] <= button_coords[0] + button_coords[2] and
-            button_coords[1] <= coords[1] <= button_coords[1] + button_coords[3]):
+    if (button_coordinates[0] <= coordinates[0] <= button_coordinates[0] + button_coordinates[2] and
+            button_coordinates[1] <= coordinates[1] <= button_coordinates[1] + button_coordinates[3]):
         return True
     else:
         return False
@@ -262,12 +263,12 @@ def starting_events_check(screen: Screen):
                 return False
         if (event.type == pygame.MOUSEBUTTONDOWN
                 and event.button == 1):
-            screen.mouse_coords = pygame.mouse.get_pos()
-            if button(screen.mouse_coords, START_BUTTON):
+            screen.mouse_coordinates = pygame.mouse.get_pos()
+            if button(screen.mouse_coordinates, START_BUTTON):
                 return False
         if ((event.type == pygame.KEYDOWN
              and event.key == pygame.K_ESCAPE)
-                or button(screen.mouse_coords, EXIT_BUTTON)
+                or button(screen.mouse_coordinates, EXIT_BUTTON)
                 or event.type == pygame.QUIT):
             pygame.quit()
             sys.exit()
